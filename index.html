@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <title>과제 #0</title>
+    <!-- CSS 영역 -->
+    <style type="text/css">
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        #canvas {
+            margin: 10px;
+            padding: 10px;
+            background: white;
+            border: thin inset black;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Canvas 영역 -->
+    <canvas id="canvas" width="1200px" height="800px">
+        Canvas not supported
+    </canvas>
+    <!-- JS 영역 -->
+    <script type="text/javascript">
+        var cvs = document.getElementById('canvas'),
+            ctx = cvs.getContext('2d');
+
+        ctx.font = '38pt Arial';
+        ctx.fillStyle = 'rgb(112, 39, 50)';
+        ctx.strokeStyle = 'black';
+
+        var str = "Kwangwoon University";
+
+        ctx.textAlign = "center";
+        ctx.fillText(str, cvs.width / 2, cvs.height / 2);
+        ctx.strokeText(str, cvs.width / 2, cvs.height / 2);
+
+        ctx.fillRect(25, 25, 100, 100); // (25,25)에 100x100 짜리 채워진 사각형 그리기
+        ctx.clearRect(45, 45, 60, 60); // (45,45)에 60x60 짜리 사각형 지우기
+        ctx.strokeRect(50, 50, 50, 50); // (50,50)에 50x50 짜리 빈 사각형 그리기
+    </script>
+</body>
+
+</html>
