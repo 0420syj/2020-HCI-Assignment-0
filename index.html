@@ -42,7 +42,7 @@
             ctx.fillRect(400, 0, 400, 800);
 
             // 3. Musée Rodin Paris
-            ctx.fillStyle = 'blue';
+            ctx.fillStyle = 'rgb(250,250,250)';
             ctx.fillRect(800, 0, 400, 400);
         }
 
@@ -314,10 +314,116 @@
             arc7();
         }
 
+        function draw2()
+        {
+            ctx.font = "60px Arial";
+            ctx.textAlign = 'center';
+            ctx.fillStyle = 'white';
+            ctx.fillText("여기다가 뭘", 600, 100);
+            ctx.fillText("그릴지 고민중", 600, 200);
+            ctx.fillText("😅😅😅😅😅", 600, 300);
+        }
 
+        function draw3()
+        {
+            ctx.strokeStyle = 'rgb(43,44,49)';
+            ctx.lineWidth = 5;
+
+            ctx.shadowOffsetX = 6;
+            ctx.shadowOffsetY = 6;
+            ctx.shadowBlur = 8;
+
+            function hair() {
+                var img = new Image();
+                img.onload = function() {
+                    pos = {
+                        x: 986,
+                        y: 121,
+                    };
+
+                    ctx.shadowColor = 'black';
+                    ctx.drawImage(img, pos.x, pos.y);
+                    ctx.shadowColor = 'transparent';
+                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                };
+                img.src = '1머리카락.png';
+            }
+
+            function skirt() {
+                var img = new Image();
+                img.onload = function() {
+                    pos = {
+                        x: 835,
+                        y: 264,
+                    };
+
+                    ctx.shadowColor = 'black';
+                    ctx.drawImage(img, pos.x, pos.y);
+                    ctx.shadowColor = 'transparent';
+                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                };
+                img.src = '2치마.png';
+            }
+
+            function face() {
+                var img = new Image();
+                img.onload = function() {
+                    pos = {
+                        x: 862,
+                        y: 11,
+                    };
+
+                    ctx.shadowColor = 'black';
+                    ctx.drawImage(img, pos.x, pos.y);
+                    ctx.shadowColor = 'transparent';
+                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                };
+                img.src = '3얼굴.png';
+            }
+
+            function arm() {
+                var img = new Image();
+                img.onload = function() {
+                    pos = {
+                        x: 857,
+                        y: 155,
+                    };
+
+                    ctx.shadowColor = 'black';
+                    ctx.drawImage(img, pos.x, pos.y);
+                    ctx.shadowColor = 'transparent';
+                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                };
+                img.src = '4팔.png';
+            }
+
+            function mouth() {
+                var img = new Image();
+                img.onload = function() {
+                    pos = {
+                        x: 819,
+                        y: 106,
+                    };
+
+                    ctx.shadowColor = 'black';
+                    ctx.drawImage(img, pos.x, pos.y);
+                    ctx.shadowColor = 'transparent';
+                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                };
+                img.src = '5입.png';
+            }
+
+            hair();
+            skirt();
+            face();
+            arm();
+            mouth();
+        }
 
         initZone();
         draw1();
+        draw2();
+        draw3();
     </script>
 </body>
 
