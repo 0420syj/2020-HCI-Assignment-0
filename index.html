@@ -31,7 +31,8 @@
         var cvs = document.getElementById('canvas'),
             ctx = cvs.getContext('2d');
 
-        function initZone() // 영역 나눠서 보기 위한 함수
+        // 영역 나눠서 보기 위한 함수
+        function initZone()
         {
             // 1. Roy Lichtenstein, Modular Painting with Four Panels, 1969
             ctx.fillStyle = 'rgb(240,240,240)';
@@ -50,13 +51,15 @@
             ctx.fillStyle = grad;
             ctx.fillRect(400,0,400,800)
 
-            // 3. Musée Rodin Paris
+            // 3. Musée Rodin Paris Poster (Hommage)
             ctx.fillStyle = 'rgb(250,250,250)';
             ctx.fillRect(800, 0, 400, 400);
         }
 
-        function draw1() // 1번째 작품
+        // 1번째 작품
+        function draw1() 
         {
+            // 우측하단 yellow-fill-stroke 삼각형
             function triangle1() {
                 // 노란 fill 삼각형
                 ctx.fillStyle = 'rgb(230,219,33)';
@@ -67,10 +70,8 @@
                 ctx.lineTo(0, 400);
                 ctx.closePath();
                 ctx.fill();
-            }
 
-            function triangle2() {
-                // 5px 검정 stroke 삼각형
+                // 6px 검정 stroke 삼각형
                 ctx.strokeStyle = 'rgb(43,44,49)';
                 ctx.lineWidth = 6;
 
@@ -81,19 +82,8 @@
                 ctx.stroke();
             }
 
-            function triangle3() {
-                // 검정 fill 삼각형
-                ctx.fillStyle = 'rgb(43,44,49)';
-
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(270, 0);
-                ctx.lineTo(0, 270);
-                ctx.closePath();
-                ctx.fill();
-            }
-
-            function triangle4() {
+            // 우측하단 pattern-fill-stroke 삼각형
+            function triangle2() {
                 // 흰 배경 파란 땡땡이 삼각형
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
@@ -114,12 +104,9 @@
                 ctx.moveTo(0, 400);
                 ctx.lineTo(330, 70);
                 ctx.lineTo(330, 400);
-                ctx.closePath();
                 ctx.fill();
-            }
 
-            function triangle5() {
-                // 5px 검정 stroke 삼각형
+                // 6px 검정 stroke 삼각형
                 ctx.strokeStyle = 'rgb(43,44,49)';
                 ctx.lineWidth = 6;
 
@@ -130,8 +117,21 @@
                 ctx.stroke();
             }
 
-            function line1() {
-                // 5px 검정선1
+            // 좌측상단 black-fill-삼각형
+            function triangle3() {
+                // 검정 fill 삼각형
+                ctx.fillStyle = 'rgb(43,44,49)';
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(270, 0);
+                ctx.lineTo(0, 270);
+                ctx.fill();
+            }
+
+            // black 직선 2개
+            function line() {
+                // 6px 검정선
                 ctx.strokeStyle = 'rgb(43,44,49)';
                 ctx.lineWidth = 6;
 
@@ -139,32 +139,27 @@
                 ctx.moveTo(295, 0);
                 ctx.lineTo(0, 295);
                 ctx.stroke();
-            }
-
-            function line2() {
-                // 5px 검정선2
-                ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.moveTo(320, 0);
                 ctx.lineTo(0, 320);
-                ctx.closePath();
                 ctx.stroke();
             }
 
+            // 좌측상단 white-fill-호
             function arc1() {
-                // 하얀 fill 호1
+                // 하얀 fill 호
                 ctx.fillStyle = 'rgb(240,240,240)';
 
                 ctx.beginPath();
                 ctx.arc(0, 0, 130, 0 * Math.PI, 0.5 * Math.PI);
-                ctx.lineTo(0, 0); // 이거 없을 때, 어떤 모양인지 테스트해보자. 이걸로 고생했다라는 식으로 써도될듯
+                ctx.lineTo(0, 0); // 주석처리하면 모양 변함
                 ctx.fill();
             }
 
+            // 우측상단 white-fill-stroke-호 & pattern-fill-stroke-호
             function arc2() {
-                // 5px 검정 stroke & 하얀 fill 호2
+                // 6px 검정 stroke & 하얀 fill 호
                 ctx.fillStyle = 'rgb(240,240,240)';
 
                 ctx.beginPath();
@@ -178,10 +173,8 @@
                 ctx.beginPath();
                 ctx.arc(400, 0, 200, 0.5 * Math.PI, 1 * Math.PI);
                 ctx.stroke();
-            }
 
-            function arc3() {
-                // 검정배경 흰 땡땡이 배경 호3
+                // 검정배경 흰 땡땡이 배경 호
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
 
@@ -210,8 +203,9 @@
                 ctx.stroke();
             }
 
-            function arc4() {
-                // 노란색 fill 호4
+            // 좌측하단 yellow-fill-stroke 호
+            function arc3() {
+                // 노란색 fill 호
                 ctx.fillStyle = 'rgb(230,219,33)';
 
                 ctx.beginPath();
@@ -227,8 +221,9 @@
                 ctx.stroke();
             }
 
-            function arc5() {
-                // 하얀색 fill 호5
+            // 좌측하단 white-fill-stroke호 & pattern-fill-stroke-호
+            function arc4() {
+                // 하얀색 fill 호
                 ctx.fillStyle = 'rgb(240,240,240)';
 
                 ctx.beginPath();
@@ -242,10 +237,8 @@
                 ctx.beginPath();
                 ctx.arc(0, 400, 130, 1.5 * Math.PI, 2 * Math.PI);
                 ctx.stroke();
-            }
 
-            function arc6() {
-                // 흰배경 검은 땡땡이 호6
+                // 흰배경 검은 땡땡이 호
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
 
@@ -275,8 +268,9 @@
                 ctx.stroke();
             }
 
-            function arc7() {
-                // 흰배경 검은 땡땡이 호6
+            // 우측하단 pattern-fill-stroke-호
+            function arc5() {
+                // 흰배경 검은 땡땡이 호
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
 
@@ -307,24 +301,20 @@
             }
 
             triangle3();
-            arc1();
-            line1();
-            line2();
+            line();
             arc2();
-            arc3();
             triangle1();
             triangle2();
-            triangle4();
-            triangle5();
             arc1();
+            arc3();
             arc4();
             arc5();
-            arc6();
-            arc7();
         }
 
+        // 2번째 작품
         function draw2()
         {
+            // 텍스트 "Tour Eiffel"
             function text1() {
                 ctx.font = "48px Arial";
                 ctx.textAlign = 'center';
@@ -332,6 +322,7 @@
                 ctx.fillText("Tour         Eiffel", 600, 174);
             }
 
+            // strokeStyle(색상, 두께) 지정
             function setStroke() {
                 ctx.strokeStyle = 'white';
                 //ctx.strokeStyle = 'rgb(4,5,0)';
@@ -339,6 +330,7 @@
                 ctx.lineWidth = 5;
             }
 
+            // 베지어 곡선
             function bezier() {
                 ctx.beginPath();
                 ctx.moveTo(400, 800); // 시작점
@@ -359,12 +351,14 @@
                 ctx.stroke();
             }
             
+            // 호
             function arc() {
                 ctx.beginPath();
                 ctx.arc(600, 800, 115, 1 * Math.PI, 0);
                 ctx.stroke();
             }
             
+            // 선
             function line() {
                 ctx.beginPath();
                 ctx.moveTo(475, 615);
@@ -410,11 +404,14 @@
             line();
         }
 
+        // 3번째 작품
         function draw3()
         {
+            // stroke 스타일(색상, 두께) 지정
             ctx.strokeStyle = 'rgb(43,44,49)';
             ctx.lineWidth = 5;
 
+            // 그림자 속성 지정
             ctx.shadowOffsetX = 6;
             ctx.shadowOffsetY = 6;
             ctx.shadowBlur = 8;
@@ -432,7 +429,7 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x,pos.y,img.width,img.height);
                 };
-                img.src = '1머리카락.png';
+                img.src = '1hair.png';
             }
 
             function skirt() {
@@ -448,7 +445,7 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x,pos.y,img.width,img.height);
                 };
-                img.src = '2치마.png';
+                img.src = '2skirt.png';
             }
 
             function face() {
@@ -464,7 +461,7 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x,pos.y,img.width,img.height);
                 };
-                img.src = '3얼굴.png';
+                img.src = '3face.png';
             }
 
             function arm() {
@@ -480,7 +477,7 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x,pos.y,img.width,img.height);
                 };
-                img.src = '4팔.png';
+                img.src = '4arm.png';
             }
 
             function mouth() {
@@ -496,7 +493,7 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x,pos.y,img.width,img.height);
                 };
-                img.src = '5입.png';
+                img.src = '5mouth.png';
             }
 
             hair();
