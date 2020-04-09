@@ -6,11 +6,11 @@
     <title>과제 #0</title>
     <!-- CSS 영역 -->
     <style type="text/css">
-        body {
+        /* body {
             margin: 0;
             display: flex;
             justify-content: center;
-        }
+        } */
 
         #canvas {
             margin: 10px;
@@ -31,19 +31,233 @@
         var cvs = document.getElementById('canvas'),
             ctx = cvs.getContext('2d');
 
-        ctx.font = '38pt Arial';
-        ctx.fillStyle = 'rgb(112, 39, 50)';
-        ctx.strokeStyle = 'black';
+        function initZone() // 영역 나눠서 보기 위한 함수
+        {
+            // ctx.strokeStyle = 'black';
+            // ctx.lineWidth = 3;
 
-        var str = "Kwangwoon University";
+            // 1. Roy Lichtenstein, Modular Painting with Four Panels, 1969
+            ctx.fillStyle = 'rgb(240,240,240)';
+            ctx.fillRect(0, 0, 400, 400);
+            // ctx.strokeRect(0, 0, 400, 400);
 
-        ctx.textAlign = "center";
-        ctx.fillText(str, cvs.width / 2, cvs.height / 2);
-        ctx.strokeText(str, cvs.width / 2, cvs.height / 2);
+            // 2. Eiffel Tower
+            ctx.fillStyle = 'green';
+            ctx.fillRect(400, 0, 400, 800);
+            // ctx.strokeRect(400, 0, 400, 800);
 
-        ctx.fillRect(25, 25, 100, 100); // (25,25)에 100x100 짜리 채워진 사각형 그리기
-        ctx.clearRect(45, 45, 60, 60); // (45,45)에 60x60 짜리 사각형 지우기
-        ctx.strokeRect(50, 50, 50, 50); // (50,50)에 50x50 짜리 빈 사각형 그리기
+            // 3. Musée Rodin Paris
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(800, 0, 400, 400);
+            // ctx.strokeRect(800, 0, 400, 400);
+        }
+
+        function draw1() // 1번째 작품
+        {
+            function triangle1() {
+                // 노란 fill 삼각형
+                ctx.fillStyle = 'rgb(230,219,33)';
+
+                ctx.beginPath();
+                ctx.moveTo(400, 0);
+                ctx.lineTo(400, 400);
+                ctx.lineTo(0, 400);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            function triangle2() {
+                // 5px 검정 stroke 삼각형
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.moveTo(400, 400);
+                ctx.lineTo(400, 0);
+                ctx.lineTo(0, 400);
+                ctx.stroke();
+            }
+
+            function triangle3() {
+                // 검정 fill 삼각형
+                ctx.fillStyle = 'rgb(43,44,49)';
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(270, 0);
+                ctx.lineTo(0, 270);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            function triangle4() {
+                // 흰 배경 파란 땡땡이 삼각형
+                var patternCanvas = document.createElement('canvas'),
+                    patternContext = patternCanvas.getContext('2d');
+
+                patternCanvas.width = 6;
+                patternCanvas.height = 6;
+
+                patternContext.fillStyle = 'rgb(240,240,240)';
+                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
+                patternContext.arc(3, 3, 1.9, 0, 2 * Math.PI);
+                patternContext.fillStyle = 'rgb(35,30,148)';
+                patternContext.fill();
+
+                var pattern = ctx.createPattern(patternCanvas, 'repeat');
+                ctx.fillStyle = pattern;
+
+                ctx.beginPath();
+                ctx.moveTo(0, 400);
+                ctx.lineTo(330, 70);
+                ctx.lineTo(330, 400);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            function triangle5() {
+                // 5px 검정 stroke 삼각형
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.moveTo(330, 400);
+                ctx.lineTo(330, 70);
+                ctx.lineTo(0, 400);
+                ctx.stroke();
+            }
+
+            function line1() {
+                // 5px 검정선1
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.moveTo(295, 0);
+                ctx.lineTo(0, 295);
+                ctx.stroke();
+            }
+
+            function line2() {
+                // 5px 검정선2
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.moveTo(320, 0);
+                ctx.lineTo(0, 320);
+                ctx.closePath();
+                ctx.stroke();
+            }
+
+            function arc1() {
+                // 하얀 fill 호1
+                ctx.fillStyle = 'rgb(240,240,240)';
+
+                ctx.beginPath();
+                ctx.arc(0, 0, 130, 0 * Math.PI, 0.5 * Math.PI);
+                ctx.lineTo(0, 0); // 이거 없을 때, 어떤 모양인지 테스트해보자. 이걸로 고생했다라는 식으로 써도될듯
+                ctx.fill();
+            }
+
+            function arc2() {
+                // 5px 검정 stroke & 하얀 fill 호2
+                ctx.fillStyle = 'rgb(240,240,240)';
+
+                ctx.beginPath();
+                ctx.arc(400, 0, 200, 0.5 * Math.PI, 1 * Math.PI);
+                ctx.lineTo(400, 0);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.arc(400, 0, 200, 0.5 * Math.PI, 1 * Math.PI);
+                ctx.stroke();
+            }
+
+            function arc3() {
+                // 검정배경 흰 땡땡이 배경 호3
+                var patternCanvas = document.createElement('canvas'),
+                    patternContext = patternCanvas.getContext('2d');
+
+                patternCanvas.width = 6;
+                patternCanvas.height = 6;
+
+                patternContext.fillStyle = 'rgb(43,44,49)';
+                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
+                patternContext.arc(3, 3, 1.6, 0, 2 * Math.PI);
+                patternContext.fillStyle = 'rgb(240,240,240)';
+                patternContext.fill();
+
+                var pattern = ctx.createPattern(patternCanvas, 'repeat');
+                ctx.fillStyle = pattern;
+                
+                ctx.beginPath();
+                ctx.arc(400, 0, 130, 0.5 * Math.PI, 1 * Math.PI);
+                ctx.lineTo(400, 0);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.arc(400, 0, 130, 0.5 * Math.PI, 1 * Math.PI);
+                ctx.stroke();
+            }
+
+            function arc4() {
+                // 노란색 fill 호4
+                ctx.fillStyle = 'rgb(230,219,33)';
+
+                ctx.beginPath();
+                ctx.arc(0, 400, 200, 1.5 * Math.PI, 2 * Math.PI);
+                ctx.lineTo(0, 400);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.arc(0, 400, 200, 1.5 * Math.PI, 2 * Math.PI);
+                ctx.stroke();
+            }
+
+            function arc5() {
+                // 하얀색 fill 호4
+                ctx.fillStyle = 'rgb(240,240,240)';
+
+                ctx.beginPath();
+                ctx.arc(0, 400, 130, 1.5 * Math.PI, 2 * Math.PI);
+                ctx.lineTo(0, 400);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 5;
+
+                ctx.beginPath();
+                ctx.arc(0, 400, 130, 1.5 * Math.PI, 2 * Math.PI);
+                ctx.stroke();
+            }
+
+            triangle3();
+            arc1();
+            line1();
+            line2();
+            arc2();
+            arc3();
+            triangle1();
+            triangle2();
+            triangle4();
+            triangle5();
+            arc1();
+            arc4();
+            arc5();
+        }
+
+        initZone();
+        draw1();
     </script>
 </body>
 
