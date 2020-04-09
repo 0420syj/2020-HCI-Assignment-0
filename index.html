@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>과제 #0</title>
+    <title>Memory in France</title>
     <!-- CSS 영역 -->
     <style type="text/css">
         /* body {
@@ -312,21 +312,19 @@
         }
 
         // 2번째 작품
-        function draw2()
+        function draw2(r,g,b)
         {
             // 텍스트 "Tour Eiffel"
             function text1() {
                 ctx.font = "48px Arial";
                 ctx.textAlign = 'center';
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
                 ctx.fillText("Tour         Eiffel", 600, 174);
             }
 
             // strokeStyle(색상, 두께) 지정
             function setStroke() {
-                ctx.strokeStyle = 'white';
-                //ctx.strokeStyle = 'rgb(4,5,0)';
-
+                ctx.strokeStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
                 ctx.lineWidth = 5;
             }
 
@@ -505,8 +503,40 @@
 
         initZone();
         draw1();
-        draw2();
+        draw2(0,0,0);
         draw3();
+
+        var i = 0, flag = true;
+
+        setInterval(function() {
+            // 2. Eiffel Tower
+            // 이 코드가 없으면 겹치는 부분의 일부가 튀어나옴
+            var grad = ctx.createRadialGradient(
+                600, 800, 450,
+                600, 800, 220
+            );
+            grad.addColorStop(0, 'rgb(13,29,88)');
+            grad.addColorStop(0.3, 'rgb(21,42,105)');
+            grad.addColorStop(0.8, 'rgb(21,108,179)');
+            grad.addColorStop(1, 'rgb(14,142,207)');
+
+            ctx.fillStyle = grad;
+            ctx.fillRect(400,0,400,800)
+            
+            if(flag)
+            {
+                draw2(i++,i++,i++);
+                if(i===255)
+                    flag = !flag;
+            }
+            else
+            {
+                draw2(i--,i--,i--);
+                if(i===0)
+                    flag = !flag;
+            }
+        }, 10);
+        
     </script>
 </body>
 
