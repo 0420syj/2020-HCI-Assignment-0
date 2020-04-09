@@ -33,23 +33,17 @@
 
         function initZone() // 영역 나눠서 보기 위한 함수
         {
-            // ctx.strokeStyle = 'black';
-            // ctx.lineWidth = 3;
-
             // 1. Roy Lichtenstein, Modular Painting with Four Panels, 1969
             ctx.fillStyle = 'rgb(240,240,240)';
             ctx.fillRect(0, 0, 400, 400);
-            // ctx.strokeRect(0, 0, 400, 400);
 
             // 2. Eiffel Tower
             ctx.fillStyle = 'green';
             ctx.fillRect(400, 0, 400, 800);
-            // ctx.strokeRect(400, 0, 400, 800);
 
             // 3. Musée Rodin Paris
             ctx.fillStyle = 'blue';
             ctx.fillRect(800, 0, 400, 400);
-            // ctx.strokeRect(800, 0, 400, 400);
         }
 
         function draw1() // 1번째 작품
@@ -69,7 +63,7 @@
             function triangle2() {
                 // 5px 검정 stroke 삼각형
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.moveTo(400, 400);
@@ -101,7 +95,7 @@
                 patternContext.fillStyle = 'rgb(240,240,240)';
                 patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
                 patternContext.arc(3, 3, 1.9, 0, 2 * Math.PI);
-                patternContext.fillStyle = 'rgb(35,30,148)';
+                patternContext.fillStyle = 'rgb(32,23,132)';
                 patternContext.fill();
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
@@ -118,7 +112,7 @@
             function triangle5() {
                 // 5px 검정 stroke 삼각형
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.moveTo(330, 400);
@@ -130,7 +124,7 @@
             function line1() {
                 // 5px 검정선1
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.moveTo(295, 0);
@@ -141,7 +135,7 @@
             function line2() {
                 // 5px 검정선2
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.moveTo(320, 0);
@@ -170,7 +164,7 @@
                 ctx.fill();
 
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.arc(400, 0, 200, 0.5 * Math.PI, 1 * Math.PI);
@@ -200,7 +194,7 @@
                 ctx.fill();
 
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.arc(400, 0, 130, 0.5 * Math.PI, 1 * Math.PI);
@@ -217,7 +211,7 @@
                 ctx.fill();
 
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.arc(0, 400, 200, 1.5 * Math.PI, 2 * Math.PI);
@@ -225,7 +219,7 @@
             }
 
             function arc5() {
-                // 하얀색 fill 호4
+                // 하얀색 fill 호5
                 ctx.fillStyle = 'rgb(240,240,240)';
 
                 ctx.beginPath();
@@ -234,10 +228,72 @@
                 ctx.fill();
 
                 ctx.strokeStyle = 'rgb(43,44,49)';
-                ctx.lineWidth = 5;
+                ctx.lineWidth = 6;
 
                 ctx.beginPath();
                 ctx.arc(0, 400, 130, 1.5 * Math.PI, 2 * Math.PI);
+                ctx.stroke();
+            }
+
+            function arc6() {
+                // 흰배경 검은 땡땡이 호6
+                var patternCanvas = document.createElement('canvas'),
+                    patternContext = patternCanvas.getContext('2d');
+
+                patternCanvas.width = 6;
+                patternCanvas.height = 6;
+
+                patternContext.fillStyle = 'rgb(240,240,240)';
+                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
+                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
+                patternContext.fillStyle = 'rgb(43,44,49)';
+                patternContext.fill();
+
+                var pattern = ctx.createPattern(patternCanvas, 'repeat');
+                ctx.fillStyle = pattern;
+                
+                ctx.beginPath();
+                ctx.arc(0, 400, 130, 1.5 * Math.PI, 1.75 * Math.PI);
+                ctx.lineTo(0, 400);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 6;
+
+                ctx.beginPath();
+                ctx.arc(0, 400, 130, 1.5 * Math.PI, 1.75 * Math.PI);
+                ctx.lineTo(0, 400);
+                ctx.stroke();
+            }
+
+            function arc7() {
+                // 흰배경 검은 땡땡이 호6
+                var patternCanvas = document.createElement('canvas'),
+                    patternContext = patternCanvas.getContext('2d');
+
+                patternCanvas.width = 6;
+                patternCanvas.height = 6;
+
+                patternContext.fillStyle = 'rgb(43,44,49)';
+                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
+                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
+                patternContext.fillStyle = 'rgb(240,240,240)';
+                patternContext.fill();
+
+                var pattern = ctx.createPattern(patternCanvas, 'repeat');
+                ctx.fillStyle = pattern;
+                
+                ctx.beginPath();
+                ctx.arc(400, 400, 130, 1 * Math.PI, 1.5 * Math.PI);
+                ctx.lineTo(400, 400);
+                ctx.fill();
+
+                ctx.strokeStyle = 'rgb(43,44,49)';
+                ctx.lineWidth = 6;
+
+                ctx.beginPath();
+                ctx.arc(400, 400, 130, 1 * Math.PI, 1.5 * Math.PI);
+                ctx.lineTo(400, 400);
                 ctx.stroke();
             }
 
@@ -254,7 +310,11 @@
             arc1();
             arc4();
             arc5();
+            arc6();
+            arc7();
         }
+
+
 
         initZone();
         draw1();
