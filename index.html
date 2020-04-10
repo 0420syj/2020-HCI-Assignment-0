@@ -42,6 +42,8 @@
         grad.addColorStop(0.8, 'rgb(21,108,179)');
         grad.addColorStop(1, 'rgb(14,142,207)');
 
+        ctx.lineJoin = "bevel";
+
         // 영역 나눠서 보기 위한 함수
         function initZone() {
             // 1. Roy Lichtenstein, Modular Painting with Four Panels, 1969
@@ -88,13 +90,21 @@
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
 
-                patternCanvas.width = 6;
+                patternCanvas.width = 12;
                 patternCanvas.height = 6;
 
                 patternContext.fillStyle = 'rgb(240,240,240)';
                 patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-                patternContext.arc(3, 3, 1.9, 0, 2 * Math.PI);
+
                 patternContext.fillStyle = 'rgb(32,23,132)';
+                patternContext.beginPath();
+                patternContext.arc(3, 3, 1.9, 0, 2 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 0, 1.9, 0, 1 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 6, 1.9, 0, 1 * Math.PI, true);
                 patternContext.fill();
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
@@ -178,14 +188,23 @@
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
 
-                patternCanvas.width = 6;
+                patternCanvas.width = 12;
                 patternCanvas.height = 6;
 
                 patternContext.fillStyle = 'rgb(43,44,49)';
                 patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-                patternContext.arc(3, 3, 1.6, 0, 2 * Math.PI);
+                
                 patternContext.fillStyle = 'rgb(240,240,240)';
+                patternContext.beginPath();
+                patternContext.arc(3, 3, 1.6, 0, 2 * Math.PI);
                 patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 0, 1.6, 0, 1 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 6, 1.6, 0, 1 * Math.PI, true);
+                patternContext.fill();
+
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
                 ctx.fillStyle = pattern;
@@ -242,13 +261,21 @@
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
 
-                patternCanvas.width = 6;
+                patternCanvas.width = 12;
                 patternCanvas.height = 6;
 
                 patternContext.fillStyle = 'rgb(240,240,240)';
                 patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
+
                 patternContext.fillStyle = 'rgb(43,44,49)';
+                patternContext.beginPath();
+                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 0, 1.8, 0, 1 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 6, 1.8, 0, 1 * Math.PI, true);
                 patternContext.fill();
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
@@ -274,13 +301,21 @@
                 var patternCanvas = document.createElement('canvas'),
                     patternContext = patternCanvas.getContext('2d');
 
-                patternCanvas.width = 6;
+                patternCanvas.width = 12;
                 patternCanvas.height = 6;
 
                 patternContext.fillStyle = 'rgb(43,44,49)';
                 patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
+
                 patternContext.fillStyle = 'rgb(240,240,240)';
+                patternContext.beginPath();
+                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 0, 1.8, 0, 1 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 6, 1.8, 0, 1 * Math.PI, true);
                 patternContext.fill();
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
