@@ -30,6 +30,7 @@
     </canvas>
     <!-- JS 영역 -->
     <script type="text/javascript">
+        // 캔버스 로드 및 2D 컨텍스트 정의
         var cvs = document.getElementById('canvas'),
             ctx = cvs.getContext('2d');
 
@@ -43,6 +44,7 @@
         grad.addColorStop(0.8, 'rgb(21,108,179)');
         grad.addColorStop(1, 'rgb(14,142,207)');
 
+        // 선 기본 설정
         ctx.lineJoin = 'bevel';
 
         // 영역 나눠서 보기 위한 함수
