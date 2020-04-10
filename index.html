@@ -80,13 +80,13 @@
                     fill ? ctx.stroke() : ctx.fill();
                 }
 
-                for (var i = 0; i < loop / 2; i++)
-                    drawPolygon(5, size, Math.random() * 400, Math.random() * 400 + 400, false);
-                for (var i = 0; i < loop / 2; i++)
-                    drawPolygon(5, size, Math.random() * 400 + 800, Math.random() * 400 + 400, false);
+                for (var i = 0; i < loop * 0.25; i++)
+                    drawPolygon(5, size, Math.random() * 400 + 400, Math.random() * 400 , false);
+                for (var i = 0; i < loop * 0.75; i++)
+                    drawPolygon(5, size, Math.random() * 1200, Math.random() * 400 + 400, false);
             }
 
-            drawLoop(4, 250, 'pink');
+            drawLoop(4, 400, 'pink');
         }
 
         // 1번째 작품
@@ -322,6 +322,12 @@
             // 텍스트 'Tour Eiffel'
             function text1() {
                 ctx.font = '48px Arial';
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 20;
+
+                // 'Tour 작성'
+                ctx.textAlign = 'start';
+                ctx.strokeText('Tour', 441, 174);
 
                 var gradient = ctx.createLinearGradient(441, 0, 536, 0);;
                 gradient.addColorStop(0, 'rgb(0, 85, 164)');
@@ -334,8 +340,11 @@
                 gradient.addColorStop(1, 'rgb(239, 65, 53)');
 
                 ctx.fillStyle = gradient;
-                ctx.textAlign = 'start';
                 ctx.fillText('Tour', 441, 174);
+
+                // 'Eiffel 작성'
+                ctx.textAlign = 'end';
+                ctx.strokeText('Eiffel', 759, 174);
 
                 gradient = ctx.createLinearGradient(657, 0, 756, 0);;
                 gradient.addColorStop(0, 'rgb(0, 85, 164)');
@@ -348,7 +357,6 @@
                 gradient.addColorStop(1, 'rgb(239, 65, 53)');
 
                 ctx.fillStyle = gradient;
-                ctx.textAlign = 'end';
                 ctx.fillText('Eiffel', 759, 174);
             }
 
@@ -360,14 +368,25 @@
 
             // 외부 베지어 곡선
             function bezier1() {
+                // 내부 색칠
+                ctx.fillStyle = grad;
                 ctx.beginPath();
-                ctx.moveTo(400, 800); // 시작점
+                ctx.moveTo(800, 800); // 시작점
                 ctx.bezierCurveTo(
-                    565, 655, // 제어점1
+                    635, 655, // 제어점1
                     600, 70, // 제어점2
                     600, 70 // 끝점
                 );
-                ctx.stroke();
+                ctx.bezierCurveTo(
+                    600, 70, // 제어점1
+                    565, 655, // 제어점2
+                    400, 800 // 끝점
+                );
+                ctx.fill();
+
+                // 외부 여벽 색칠
+                ctx.strokeStyle = grad;
+                ctx.lineWidth = 40;
 
                 ctx.beginPath();
                 ctx.moveTo(800, 800); // 시작점
@@ -375,6 +394,28 @@
                     635, 655, // 제어점1
                     600, 70, // 제어점2
                     600, 70 // 끝점
+                );
+                ctx.bezierCurveTo(
+                    600, 70, // 제어점1
+                    565, 655, // 제어점2
+                    400, 800 // 끝점
+                );
+                ctx.stroke();
+
+                // 실제 색칠
+                setStroke();
+
+                ctx.beginPath();
+                ctx.moveTo(800, 800); // 시작점
+                ctx.bezierCurveTo(
+                    635, 655, // 제어점1
+                    600, 70, // 제어점2
+                    600, 70 // 끝점
+                );
+                ctx.bezierCurveTo(
+                    600, 70, // 제어점1
+                    565, 655, // 제어점2
+                    400, 800 // 끝점
                 );
                 ctx.stroke();
             }
@@ -531,7 +572,6 @@
                 stage3();
             }
 
-
             text1();
             setStroke();
             bezier1();
@@ -658,10 +698,6 @@
         var signal = true;
 
         var glowEiffel = setInterval(function () {
-            // 이 코드가 없으면 겹치는 부분의 일부가 튀어나옴
-            ctx.fillStyle = grad;
-            ctx.fillRect(400, 0, 400, 800)
-
             if (flag) {
                 draw2(i++, i++, i++);
                 if (i === 255)
@@ -683,10 +719,6 @@
 
             else {
                 glowEiffel = setInterval(function () {
-                    // 이 코드가 없으면 겹치는 부분의 일부가 튀어나옴
-                    ctx.fillStyle = grad;
-                    ctx.fillRect(400, 0, 400, 800)
-
                     if (flag) {
                         draw2(i++, i++, i++);
                         if (i === 255)
