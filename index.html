@@ -33,6 +33,7 @@
         var cvs = document.getElementById('canvas'),
             ctx = cvs.getContext('2d');
 
+        // 2번 작품에 쓰이는 배경 그라데이션
         var grad = ctx.createRadialGradient(
             600, 800, 450,
             600, 800, 220
@@ -42,7 +43,7 @@
         grad.addColorStop(0.8, 'rgb(21,108,179)');
         grad.addColorStop(1, 'rgb(14,142,207)');
 
-        ctx.lineJoin = "bevel";
+        ctx.lineJoin = 'bevel';
 
         // 영역 나눠서 보기 위한 함수
         function initZone() {
@@ -57,10 +58,65 @@
             // 3. Musée Rodin Paris Poster (Hommage)
             ctx.fillStyle = 'rgb(250,250,250)';
             ctx.fillRect(800, 0, 400, 400);
+
+            // 4. 나머지 빈 공간
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 400, 400, 400);
+            ctx.fillStyle = grad;
+            ctx.fillRect(800, 400, 400, 400);
+
+            // 랜덤 자동생성 함수
+            function drawLoop(size, loop, color) {
+                ctx.fillStyle = color;
+                ctx.strokeStyle = color;
+
+                // 다각형 작성 함수
+                function drawPolygon(sides, size, x, y, fill) {
+                    ctx.beginPath();
+                    ctx.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
+                    for (var i = 1; i <= sides; i++)
+                        ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides), y + size * Math.sin(i * 2 * Math.PI / sides));
+
+                    fill ? ctx.stroke() : ctx.fill();
+                }
+
+                for (var i = 0; i < loop / 2; i++)
+                    drawPolygon(5, size, Math.random() * 400, Math.random() * 400 + 400, false);
+                for (var i = 0; i < loop / 2; i++)
+                    drawPolygon(5, size, Math.random() * 400 + 800, Math.random() * 400 + 400, false);
+            }
+
+            drawLoop(4, 250, 'pink');
         }
 
         // 1번째 작품
         function draw1() {
+            // 패턴 생성 함수
+            function dotPattern(bgColor, dotColor, dotRadius) {
+                var patternCanvas = document.createElement('canvas'),
+                    patternContext = patternCanvas.getContext('2d');
+
+                patternCanvas.width = 12;
+                patternCanvas.height = 6;
+
+                patternContext.fillStyle = bgColor;
+                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
+
+                patternContext.fillStyle = dotColor;
+                patternContext.beginPath();
+                patternContext.arc(3, 3, dotRadius, 0, 2 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 0, dotRadius, 0, 1 * Math.PI);
+                patternContext.fill();
+                patternContext.beginPath();
+                patternContext.arc(9, 6, dotRadius, 0, 1 * Math.PI, true);
+                patternContext.fill();
+
+                var pattern = ctx.createPattern(patternCanvas, 'repeat');
+                ctx.fillStyle = pattern;
+            }
+
             // 우측하단 yellow-fill-stroke 삼각형
             function triangle1() {
                 // 노란 fill 삼각형
@@ -87,28 +143,7 @@
             // 우측하단 pattern-fill-stroke 삼각형
             function triangle2() {
                 // 흰 배경 파란 땡땡이 삼각형
-                var patternCanvas = document.createElement('canvas'),
-                    patternContext = patternCanvas.getContext('2d');
-
-                patternCanvas.width = 12;
-                patternCanvas.height = 6;
-
-                patternContext.fillStyle = 'rgb(240,240,240)';
-                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-
-                patternContext.fillStyle = 'rgb(32,23,132)';
-                patternContext.beginPath();
-                patternContext.arc(3, 3, 1.9, 0, 2 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 0, 1.9, 0, 1 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 6, 1.9, 0, 1 * Math.PI, true);
-                patternContext.fill();
-
-                var pattern = ctx.createPattern(patternCanvas, 'repeat');
-                ctx.fillStyle = pattern;
+                dotPattern('rgb(240,240,240)', 'rgb(32,23,132)', 1.85);
 
                 ctx.beginPath();
                 ctx.moveTo(0, 400);
@@ -185,29 +220,7 @@
                 ctx.stroke();
 
                 // 검정배경 흰 땡땡이 배경 호
-                var patternCanvas = document.createElement('canvas'),
-                    patternContext = patternCanvas.getContext('2d');
-
-                patternCanvas.width = 12;
-                patternCanvas.height = 6;
-
-                patternContext.fillStyle = 'rgb(43,44,49)';
-                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-                
-                patternContext.fillStyle = 'rgb(240,240,240)';
-                patternContext.beginPath();
-                patternContext.arc(3, 3, 1.6, 0, 2 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 0, 1.6, 0, 1 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 6, 1.6, 0, 1 * Math.PI, true);
-                patternContext.fill();
-
-
-                var pattern = ctx.createPattern(patternCanvas, 'repeat');
-                ctx.fillStyle = pattern;
+                dotPattern('rgb(43,44,49)', 'rgb(240,240,240)', 1.6);
 
                 ctx.beginPath();
                 ctx.arc(400, 0, 130, 0.5 * Math.PI, 1 * Math.PI);
@@ -258,28 +271,7 @@
                 ctx.stroke();
 
                 // 흰배경 검은 땡땡이 호
-                var patternCanvas = document.createElement('canvas'),
-                    patternContext = patternCanvas.getContext('2d');
-
-                patternCanvas.width = 12;
-                patternCanvas.height = 6;
-
-                patternContext.fillStyle = 'rgb(240,240,240)';
-                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-
-                patternContext.fillStyle = 'rgb(43,44,49)';
-                patternContext.beginPath();
-                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 0, 1.8, 0, 1 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 6, 1.8, 0, 1 * Math.PI, true);
-                patternContext.fill();
-
-                var pattern = ctx.createPattern(patternCanvas, 'repeat');
-                ctx.fillStyle = pattern;
+                dotPattern('rgb(240,240,240)', 'rgb(43,44,49)', 1.9);
 
                 ctx.beginPath();
                 ctx.arc(0, 400, 130, 1.5 * Math.PI, 1.75 * Math.PI);
@@ -298,28 +290,7 @@
             // 우측하단 pattern-fill-stroke-호
             function arc5() {
                 // 흰배경 검은 땡땡이 호
-                var patternCanvas = document.createElement('canvas'),
-                    patternContext = patternCanvas.getContext('2d');
-
-                patternCanvas.width = 12;
-                patternCanvas.height = 6;
-
-                patternContext.fillStyle = 'rgb(43,44,49)';
-                patternContext.fillRect(0, 0, patternCanvas.width, patternCanvas.height);
-
-                patternContext.fillStyle = 'rgb(240,240,240)';
-                patternContext.beginPath();
-                patternContext.arc(3, 3, 1.8, 0, 2 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 0, 1.8, 0, 1 * Math.PI);
-                patternContext.fill();
-                patternContext.beginPath();
-                patternContext.arc(9, 6, 1.8, 0, 1 * Math.PI, true);
-                patternContext.fill();
-
-                var pattern = ctx.createPattern(patternCanvas, 'repeat');
-                ctx.fillStyle = pattern;
+                dotPattern('rgb(43,44,49)', 'rgb(240,240,240)', 1.6);
 
                 ctx.beginPath();
                 ctx.arc(400, 400, 130, 1 * Math.PI, 1.5 * Math.PI);
@@ -348,12 +319,37 @@
 
         // 2번째 작품
         function draw2(r, g, b) {
-            // 텍스트 "Tour Eiffel"
+            // 텍스트 'Tour Eiffel'
             function text1() {
-                ctx.font = "48px Arial";
-                ctx.textAlign = 'center';
-                ctx.fillStyle = 'rgb(' + r + ',' + g + ',' + b + ')';
-                ctx.fillText("Tour         Eiffel", 600, 174);
+                ctx.font = '48px Arial';
+
+                var gradient = ctx.createLinearGradient(441, 0, 536, 0);;
+                gradient.addColorStop(0, 'rgb(0, 85, 164)');
+                gradient.addColorStop(0.2, 'rgb(0, 85, 164)');
+
+                gradient.addColorStop(0.4, 'rgb(' + r + ',' + g + ',' + b + ')');
+                gradient.addColorStop(0.6, 'rgb(' + r + ',' + g + ',' + b + ')');
+
+                gradient.addColorStop(0.8, 'rgb(239, 65, 53)');
+                gradient.addColorStop(1, 'rgb(239, 65, 53)');
+
+                ctx.fillStyle = gradient;
+                ctx.textAlign = 'start';
+                ctx.fillText('Tour', 441, 174);
+
+                gradient = ctx.createLinearGradient(657, 0, 756, 0);;
+                gradient.addColorStop(0, 'rgb(0, 85, 164)');
+                gradient.addColorStop(0.2, 'rgb(0, 85, 164)');
+
+                gradient.addColorStop(0.4, 'rgb(' + r + ',' + g + ',' + b + ')');
+                gradient.addColorStop(0.6, 'rgb(' + r + ',' + g + ',' + b + ')');
+
+                gradient.addColorStop(0.8, 'rgb(239, 65, 53)');
+                gradient.addColorStop(1, 'rgb(239, 65, 53)');
+
+                ctx.fillStyle = gradient;
+                ctx.textAlign = 'end';
+                ctx.fillText('Eiffel', 759, 174);
             }
 
             // strokeStyle(색상, 두께) 지정
@@ -417,7 +413,7 @@
                     );
                     ctx.stroke();
                 }
-                
+
                 // 3층 베지어
                 function floor3() {
                     ctx.beginPath();
@@ -481,7 +477,7 @@
                     ctx.closePath();
                     ctx.stroke();
                 }
-                
+
                 // 2단
                 function stage2() {
                     ctx.fillStyle = grad;
@@ -500,7 +496,7 @@
                     ctx.closePath();
                     ctx.stroke();
                 }
-                
+
                 // 3단
                 function stage3() {
                     ctx.fillStyle = grad;
@@ -535,6 +531,7 @@
                 stage3();
             }
 
+
             text1();
             setStroke();
             bezier1();
@@ -545,6 +542,9 @@
 
         // 3번째 작품
         function draw3() {
+            ctx.fillStyle = 'rgb(250,250,250)';
+            ctx.fillRect(800, 0, 400, 400);
+
             // stroke 스타일(색상, 두께) 지정
             ctx.strokeStyle = 'rgb(43,44,49)';
             ctx.lineWidth = 5;
@@ -556,6 +556,8 @@
 
             function hair() {
                 var img = new Image();
+
+                img.src = 'resource/1hair.png';
                 img.onload = function () {
                     pos = {
                         x: 986,
@@ -567,11 +569,12 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
-                img.src = 'resource/1hair.png';
             }
 
             function skirt() {
                 var img = new Image();
+
+                img.src = 'resource/2skirt.png';
                 img.onload = function () {
                     pos = {
                         x: 835,
@@ -583,11 +586,12 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
-                img.src = 'resource/2skirt.png';
             }
 
             function face() {
                 var img = new Image();
+
+                img.src = 'resource/3face.png';
                 img.onload = function () {
                     pos = {
                         x: 862,
@@ -599,11 +603,13 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
-                img.src = 'resource/3face.png';
+
             }
 
             function arm() {
                 var img = new Image();
+
+                img.src = 'resource/4arm.png';
                 img.onload = function () {
                     pos = {
                         x: 857,
@@ -615,11 +621,13 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
-                img.src = 'resource/4arm.png';
+
             }
 
             function mouth() {
                 var img = new Image();
+
+                img.src = 'resource/5mouth.png';
                 img.onload = function () {
                     pos = {
                         x: 819,
@@ -631,7 +639,6 @@
                     ctx.shadowColor = 'transparent';
                     ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
-                img.src = 'resource/5mouth.png';
             }
 
             hair();
@@ -646,10 +653,11 @@
         draw2(0, 0, 0);
         draw3();
 
+        // 색이 변하는 에펠탑
         var i = 0, flag = true;
+        var signal = true;
 
-        setInterval(function () {
-            // 2. Eiffel Tower
+        var glowEiffel = setInterval(function () {
             // 이 코드가 없으면 겹치는 부분의 일부가 튀어나옴
             ctx.fillStyle = grad;
             ctx.fillRect(400, 0, 400, 800)
@@ -666,6 +674,34 @@
             }
         }, 10);
 
+        cvs.addEventListener('click', function () {
+            console.log('clicked');
+            if (signal) {
+                clearInterval(glowEiffel);
+                signal = false;
+            }
+
+            else {
+                glowEiffel = setInterval(function () {
+                    // 이 코드가 없으면 겹치는 부분의 일부가 튀어나옴
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(400, 0, 400, 800)
+
+                    if (flag) {
+                        draw2(i++, i++, i++);
+                        if (i === 255)
+                            flag = !flag;
+                    }
+                    else {
+                        draw2(i--, i--, i--);
+                        if (i === 0)
+                            flag = !flag;
+                    }
+                }, 10);
+                signal = true;
+            }
+
+        });
     </script>
 </body>
 
