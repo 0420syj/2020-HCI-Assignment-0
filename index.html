@@ -17,6 +17,8 @@
             padding: 10px;
             background: white;
             border: thin inset black;
+            /* canvas 태그가 아닌 이 곳에서 width, height 지정하면
+            캔버스 크기는 적용이 되지만, 서피스 크기는 기본 크기인 300x150으로 지정됨 */
         }
     </style>
 </head>
@@ -31,25 +33,24 @@
         var cvs = document.getElementById('canvas'),
             ctx = cvs.getContext('2d');
 
+        var grad = ctx.createRadialGradient(
+            600, 800, 450,
+            600, 800, 220
+        );
+        grad.addColorStop(0, 'rgb(13,29,88)');
+        grad.addColorStop(0.3, 'rgb(21,42,105)');
+        grad.addColorStop(0.8, 'rgb(21,108,179)');
+        grad.addColorStop(1, 'rgb(14,142,207)');
+
         // 영역 나눠서 보기 위한 함수
-        function initZone()
-        {
+        function initZone() {
             // 1. Roy Lichtenstein, Modular Painting with Four Panels, 1969
             ctx.fillStyle = 'rgb(240,240,240)';
             ctx.fillRect(0, 0, 400, 400);
 
             // 2. Eiffel Tower
-            var grad = ctx.createRadialGradient(
-                600, 800, 450,
-                600, 800, 220
-            );
-            grad.addColorStop(0, 'rgb(13,29,88)');
-            grad.addColorStop(0.3, 'rgb(21,42,105)');
-            grad.addColorStop(0.8, 'rgb(21,108,179)');
-            grad.addColorStop(1, 'rgb(14,142,207)');
-
             ctx.fillStyle = grad;
-            ctx.fillRect(400,0,400,800)
+            ctx.fillRect(400, 0, 400, 800)
 
             // 3. Musée Rodin Paris Poster (Hommage)
             ctx.fillStyle = 'rgb(250,250,250)';
@@ -57,8 +58,7 @@
         }
 
         // 1번째 작품
-        function draw1() 
-        {
+        function draw1() {
             // 우측하단 yellow-fill-stroke 삼각형
             function triangle1() {
                 // 노란 fill 삼각형
@@ -152,7 +152,7 @@
                 ctx.fillStyle = 'rgb(240,240,240)';
 
                 ctx.beginPath();
-                ctx.arc(0, 0, 130, 0 * Math.PI, 0.5 * Math.PI);
+                ctx.arc(0, 0, 130, 0, 0.5 * Math.PI);
                 ctx.lineTo(0, 0); // 주석처리하면 모양 변함
                 ctx.fill();
             }
@@ -189,7 +189,7 @@
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
                 ctx.fillStyle = pattern;
-                
+
                 ctx.beginPath();
                 ctx.arc(400, 0, 130, 0.5 * Math.PI, 1 * Math.PI);
                 ctx.lineTo(400, 0);
@@ -253,7 +253,7 @@
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
                 ctx.fillStyle = pattern;
-                
+
                 ctx.beginPath();
                 ctx.arc(0, 400, 130, 1.5 * Math.PI, 1.75 * Math.PI);
                 ctx.lineTo(0, 400);
@@ -285,7 +285,7 @@
 
                 var pattern = ctx.createPattern(patternCanvas, 'repeat');
                 ctx.fillStyle = pattern;
-                
+
                 ctx.beginPath();
                 ctx.arc(400, 400, 130, 1 * Math.PI, 1.5 * Math.PI);
                 ctx.lineTo(400, 400);
@@ -312,8 +312,7 @@
         }
 
         // 2번째 작품
-        function draw2(r,g,b)
-        {
+        function draw2(r, g, b) {
             // 텍스트 "Tour Eiffel"
             function text1() {
                 ctx.font = "48px Arial";
@@ -328,83 +327,189 @@
                 ctx.lineWidth = 5;
             }
 
-            // 베지어 곡선
-            function bezier() {
+            // 외부 베지어 곡선
+            function bezier1() {
                 ctx.beginPath();
                 ctx.moveTo(400, 800); // 시작점
                 ctx.bezierCurveTo(
-                    525, 800,
-                    620, 70,
-                    600, 70 // 종점
+                    565, 655, // 제어점1
+                    600, 70, // 제어점2
+                    600, 70 // 끝점
                 );
                 ctx.stroke();
 
                 ctx.beginPath();
                 ctx.moveTo(800, 800); // 시작점
                 ctx.bezierCurveTo(
-                    675, 800,
-                    580, 70,
-                    600, 70 // 종점
+                    635, 655, // 제어점1
+                    600, 70, // 제어점2
+                    600, 70 // 끝점
                 );
                 ctx.stroke();
             }
-            
-            // 호
+
+            // 내부 베지어 곡선
+            function bezier2() {
+                // 1층 베지어
+                function floor1() {
+                    ctx.beginPath();
+                    ctx.moveTo(515, 700); // 시작점
+                    ctx.bezierCurveTo(
+                        600, 635, // 제어점1
+                        680, 700, // 제어점2
+                        685, 700 // 끝점
+                    );
+                    ctx.stroke();
+                }
+
+                // 2층 베지어
+                function floor2() {
+                    ctx.beginPath();
+                    ctx.moveTo(550, 615); // 시작점
+                    ctx.bezierCurveTo(
+                        560, 600, // 제어점1
+                        580, 475, // 제어점2
+                        580, 475 // 끝점
+                    );
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(650, 615); // 시작점
+                    ctx.bezierCurveTo(
+                        640, 600, // 제어점1
+                        620, 475, // 제어점2
+                        620, 475 // 끝점
+                    );
+                    ctx.stroke();
+                }
+                
+                // 3층 베지어
+                function floor3() {
+                    ctx.beginPath();
+                    ctx.moveTo(590, 425); // 시작점
+                    ctx.bezierCurveTo(
+                        600, 360, // 제어점1
+                        600, 330, // 제어점2
+                        600, 330 // 끝점
+                    );
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.moveTo(610, 425); // 시작점
+                    ctx.bezierCurveTo(
+                        600, 360, // 제어점1
+                        600, 330, // 제어점2
+                        600, 330 // 끝점
+                    );
+                    ctx.stroke();
+                }
+
+                floor1();
+                floor2();
+                floor3();
+            }
+
+            // 아래 뚫린 공간 호
             function arc() {
                 ctx.beginPath();
-                ctx.arc(600, 800, 115, 1 * Math.PI, 0);
+                ctx.arc(600, 800, 115, 0, 1 * Math.PI, true); // true : 반시계 방향, false(default) : 시계 방향
                 ctx.stroke();
             }
-            
+
             // 선
             function line() {
-                ctx.beginPath();
-                ctx.moveTo(475, 615);
-                ctx.lineTo(725, 615);
-                ctx.lineTo(715, 640);
-                ctx.lineTo(485, 640);
-                ctx.closePath();
-                ctx.stroke();
+                // 1층 베지어 연결 선
+                function floor1() {
+                    ctx.beginPath();
+                    ctx.moveTo(515, 700);
+                    ctx.lineTo(535, 655);
+                    ctx.lineTo(665, 655);
+                    ctx.lineTo(685, 700);
+                    ctx.stroke();
+                }
 
-                ctx.beginPath();
-                ctx.moveTo(520, 700);
-                ctx.lineTo(535, 655);
-                ctx.lineTo(665, 655);
-                ctx.lineTo(680, 700);
-                ctx.stroke();
+                // 1단
+                function stage1() {
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.moveTo(485, 615);
+                    ctx.lineTo(715, 615);
+                    ctx.lineTo(705, 640);
+                    ctx.lineTo(495, 640);
+                    ctx.fill();
 
-                ctx.beginPath();
-                ctx.moveTo(540, 425);
-                ctx.lineTo(660, 425);
-                ctx.lineTo(655, 460);
-                ctx.lineTo(545, 460);
-                ctx.closePath();
-                ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(485, 615);
+                    ctx.lineTo(715, 615);
+                    ctx.lineTo(705, 640);
+                    ctx.lineTo(495, 640);
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+                
+                // 2단
+                function stage2() {
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.moveTo(535, 425);
+                    ctx.lineTo(665, 425);
+                    ctx.lineTo(655, 460);
+                    ctx.lineTo(545, 460);
+                    ctx.fill();
 
-                ctx.beginPath();
-                ctx.moveTo(585, 475);
-                ctx.lineTo(615, 475);
-                ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(535, 425);
+                    ctx.lineTo(665, 425);
+                    ctx.lineTo(655, 460);
+                    ctx.lineTo(545, 460);
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+                
+                // 3단
+                function stage3() {
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.moveTo(583, 170);
+                    ctx.lineTo(617, 170);
+                    ctx.lineTo(615, 147)
+                    ctx.lineTo(585, 147)
+                    ctx.fill();
 
-                ctx.beginPath();
-                ctx.moveTo(580, 170);
-                ctx.lineTo(620, 170);
-                ctx.lineTo(620, 147)
-                ctx.lineTo(580, 147)
-                ctx.closePath();
-                ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(583, 170);
+                    ctx.lineTo(617, 170);
+                    ctx.lineTo(615, 147)
+                    ctx.lineTo(585, 147)
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+
+                // 2층 베지어 연결 선
+                function floor2() {
+                    ctx.beginPath();
+                    ctx.moveTo(580, 475);
+                    ctx.lineTo(620, 475);
+                    ctx.stroke();
+                }
+
+                floor1();
+                stage1();
+                floor2();
+                stage2();
+                stage3();
             }
-            
+
             text1();
             setStroke();
-            bezier();
+            bezier1();
+            bezier2();
             arc();
             line();
         }
 
         // 3번째 작품
-        function draw3()
-        {
+        function draw3() {
             // stroke 스타일(색상, 두께) 지정
             ctx.strokeStyle = 'rgb(43,44,49)';
             ctx.lineWidth = 5;
@@ -416,7 +521,7 @@
 
             function hair() {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                     pos = {
                         x: 986,
                         y: 121,
@@ -425,14 +530,14 @@
                     ctx.shadowColor = 'black';
                     ctx.drawImage(img, pos.x, pos.y);
                     ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
                 img.src = 'resource/1hair.png';
             }
 
             function skirt() {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                     pos = {
                         x: 835,
                         y: 264,
@@ -441,14 +546,14 @@
                     ctx.shadowColor = 'black';
                     ctx.drawImage(img, pos.x, pos.y);
                     ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
                 img.src = 'resource/2skirt.png';
             }
 
             function face() {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                     pos = {
                         x: 862,
                         y: 11,
@@ -457,14 +562,14 @@
                     ctx.shadowColor = 'black';
                     ctx.drawImage(img, pos.x, pos.y);
                     ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
                 img.src = 'resource/3face.png';
             }
 
             function arm() {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                     pos = {
                         x: 857,
                         y: 155,
@@ -473,14 +578,14 @@
                     ctx.shadowColor = 'black';
                     ctx.drawImage(img, pos.x, pos.y);
                     ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
                 img.src = 'resource/4arm.png';
             }
 
             function mouth() {
                 var img = new Image();
-                img.onload = function() {
+                img.onload = function () {
                     pos = {
                         x: 819,
                         y: 106,
@@ -489,7 +594,7 @@
                     ctx.shadowColor = 'black';
                     ctx.drawImage(img, pos.x, pos.y);
                     ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x,pos.y,img.width,img.height);
+                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
                 };
                 img.src = 'resource/5mouth.png';
             }
@@ -503,40 +608,29 @@
 
         initZone();
         draw1();
-        draw2(0,0,0);
+        draw2(0, 0, 0);
         draw3();
 
         var i = 0, flag = true;
 
-        setInterval(function() {
+        setInterval(function () {
             // 2. Eiffel Tower
             // 이 코드가 없으면 겹치는 부분의 일부가 튀어나옴
-            var grad = ctx.createRadialGradient(
-                600, 800, 450,
-                600, 800, 220
-            );
-            grad.addColorStop(0, 'rgb(13,29,88)');
-            grad.addColorStop(0.3, 'rgb(21,42,105)');
-            grad.addColorStop(0.8, 'rgb(21,108,179)');
-            grad.addColorStop(1, 'rgb(14,142,207)');
-
             ctx.fillStyle = grad;
-            ctx.fillRect(400,0,400,800)
-            
-            if(flag)
-            {
-                draw2(i++,i++,i++);
-                if(i===255)
+            ctx.fillRect(400, 0, 400, 800)
+
+            if (flag) {
+                draw2(i++, i++, i++);
+                if (i === 255)
                     flag = !flag;
             }
-            else
-            {
-                draw2(i--,i--,i--);
-                if(i===0)
+            else {
+                draw2(i--, i--, i--);
+                if (i === 0)
                     flag = !flag;
             }
         }, 10);
-        
+
     </script>
 </body>
 
