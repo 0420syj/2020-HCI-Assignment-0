@@ -81,7 +81,7 @@
                 }
 
                 for (var i = 0; i < loop * 0.25; i++)
-                    drawPolygon(5, size, Math.random() * 400 + 400, Math.random() * 400 , false);
+                    drawPolygon(5, size, Math.random() * 400 + 400, Math.random() * 400, false);
                 for (var i = 0; i < loop * 0.75; i++)
                     drawPolygon(5, size, Math.random() * 1200, Math.random() * 400 + 400, false);
             }
@@ -594,91 +594,137 @@
             ctx.shadowOffsetY = 6;
             ctx.shadowBlur = 8;
 
+            // 배열에 5개가 저장되면, 모두 Load 된 상태
+            var loadStatus = [];
+            // Image 객체 배열
+            var img = [0,0,0,0,0];
+
             function hair() {
-                var img = new Image();
+                img[0] = new Image();
 
-                img.src = 'resource/1hair.png';
-                img.onload = function () {
-                    pos = {
-                        x: 986,
-                        y: 121,
-                    };
-
-                    ctx.shadowColor = 'black';
-                    ctx.drawImage(img, pos.x, pos.y);
-                    ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
+                img[0].src = 'resource/0hair.png';
+                img[0].onload = function () {
+                    loadStatus.push(true);
+                    tryDraw();
                 };
+
+
+            }
+
+            function drawHair() {
+                pos = {
+                    x: 986,
+                    y: 121,
+                };
+
+                ctx.shadowColor = 'black';
+                ctx.drawImage(img[0], pos.x, pos.y);
+                ctx.shadowColor = 'transparent';
+                ctx.strokeRect(pos.x, pos.y, img[0].width, img[0].height);
             }
 
             function skirt() {
-                var img = new Image();
+                img[1] = new Image();
 
-                img.src = 'resource/2skirt.png';
-                img.onload = function () {
-                    pos = {
-                        x: 835,
-                        y: 264,
-                    };
-
-                    ctx.shadowColor = 'black';
-                    ctx.drawImage(img, pos.x, pos.y);
-                    ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
+                img[1].src = 'resource/1skirt.png';
+                img[1].onload = function () {
+                    loadStatus.push(true);
+                    tryDraw();
                 };
+            }
+
+            function drawSkirt() {
+                pos = {
+                    x: 835,
+                    y: 264,
+                };
+
+                ctx.shadowColor = 'black';
+                ctx.drawImage(img[1], pos.x, pos.y);
+                ctx.shadowColor = 'transparent';
+                ctx.strokeRect(pos.x, pos.y, img[1].width, img[1].height);
             }
 
             function face() {
-                var img = new Image();
+                img[2] = new Image();
 
-                img.src = 'resource/3face.png';
-                img.onload = function () {
-                    pos = {
-                        x: 862,
-                        y: 11,
-                    };
+                img[2].src = 'resource/2face.png';
+                img[2].onload = function () {
 
-                    ctx.shadowColor = 'black';
-                    ctx.drawImage(img, pos.x, pos.y);
-                    ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
+                    loadStatus.push(true);
+                    tryDraw();
+                };
+            }
+
+            function drawFace() {
+                pos = {
+                    x: 862,
+                    y: 11,
                 };
 
+                ctx.shadowColor = 'black';
+                ctx.drawImage(img[2], pos.x, pos.y);
+                ctx.shadowColor = 'transparent';
+                ctx.strokeRect(pos.x, pos.y, img[2].width, img[2].height);
             }
 
             function arm() {
-                var img = new Image();
+                img[3] = new Image();
 
-                img.src = 'resource/4arm.png';
-                img.onload = function () {
-                    pos = {
-                        x: 857,
-                        y: 155,
-                    };
+                img[3].src = 'resource/3arm.png';
+                img[3].onload = function () {
 
-                    ctx.shadowColor = 'black';
-                    ctx.drawImage(img, pos.x, pos.y);
-                    ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
+                    loadStatus.push(true);
+                    tryDraw();
+                };
+            }
+
+            function drawArm() {
+                pos = {
+                    x: 857,
+                    y: 155,
                 };
 
+                ctx.shadowColor = 'black';
+                ctx.drawImage(img[3], pos.x, pos.y);
+                ctx.shadowColor = 'transparent';
+                ctx.strokeRect(pos.x, pos.y, img[3].width, img[3].height);
             }
 
             function mouth() {
-                var img = new Image();
+                img[4] = new Image();
 
-                img.src = 'resource/5mouth.png';
-                img.onload = function () {
-                    pos = {
-                        x: 819,
-                        y: 106,
-                    };
+                img[4].src = 'resource/4mouth.png';
+                img[4].onload = function () {
 
-                    ctx.shadowColor = 'black';
-                    ctx.drawImage(img, pos.x, pos.y);
-                    ctx.shadowColor = 'transparent';
-                    ctx.strokeRect(pos.x, pos.y, img.width, img.height);
+                    loadStatus.push(true);
+                    tryDraw();
                 };
+            }
+
+            function drawMouth() {
+                pos = {
+                    x: 819,
+                    y: 106,
+                };
+
+                ctx.shadowColor = 'black';
+                ctx.drawImage(img[4], pos.x, pos.y);
+                ctx.shadowColor = 'transparent';
+                ctx.strokeRect(pos.x, pos.y, img[4].width, img[4].height);
+            }
+
+            function tryDraw() {
+                console.log(loadStatus.length/5*100 + '%');
+
+                if (loadStatus.length === 5) {
+                    console.log(img)
+                    drawHair();
+                    drawSkirt();
+                    drawFace();
+                    drawArm();
+                    drawMouth();
+                }
             }
 
             hair();
