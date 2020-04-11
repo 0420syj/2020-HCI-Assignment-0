@@ -6,19 +6,11 @@
     <title>Memory in France</title>
     <!-- CSS 영역 -->
     <style type="text/css">
-        /* body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-        } */
-
         #canvas {
             margin: 10px;
             padding: 10px;
             background: white;
             border: thin inset black;
-            /* canvas 태그가 아닌 이 곳에서 width, height 지정하면
-            캔버스 크기는 적용이 되지만, 서피스 크기는 기본 크기인 300x150으로 지정됨 */
         }
     </style>
 </head>
@@ -49,7 +41,7 @@
 
         // 영역 나눠서 보기 위한 함수
         function initZone() {
-            // 1. Roy Lichtenstein, Modular Painting with Four Panels, 1969
+            // 1. Roy Lichtenstein, Modular Painting with Four Panels
             ctx.fillStyle = 'rgb(240,240,240)';
             ctx.fillRect(0, 0, 400, 400);
 
@@ -68,7 +60,7 @@
             ctx.fillRect(800, 400, 400, 400);
 
             // 랜덤 자동생성 함수
-            function drawLoop(size, loop, color) {
+            function drawLoop(size, loop, color, fill) {
                 ctx.fillStyle = color;
                 ctx.strokeStyle = color;
 
@@ -77,18 +69,23 @@
                     ctx.beginPath();
                     ctx.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
                     for (var i = 1; i <= sides; i++)
-                        ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides), y + size * Math.sin(i * 2 * Math.PI / sides));
+                        ctx.lineTo(x + size * Math.cos(i * 2 * Math.PI / sides),
+                            y + size * Math.sin(i * 2 * Math.PI / sides));
 
-                    fill ? ctx.stroke() : ctx.fill();
+                    fill ? ctx.fill() : ctx.stroke();
                 }
 
                 for (var i = 0; i < loop * 0.25; i++)
-                    drawPolygon(5, size, Math.random() * 400 + 400, Math.random() * 400, false);
+                    drawPolygon(5, size,
+                        Math.random() * 400 + 400,
+                        Math.random() * 400, fill);
                 for (var i = 0; i < loop * 0.75; i++)
-                    drawPolygon(5, size, Math.random() * 1200, Math.random() * 400 + 400, false);
+                    drawPolygon(5, size,
+                        Math.random() * 1200,
+                        Math.random() * 400 + 400, fill);
             }
 
-            drawLoop(4, 400, 'pink');
+            drawLoop(4, 400, 'pink', true);
         }
 
         // 1번째 작품
@@ -119,8 +116,20 @@
                 ctx.fillStyle = pattern;
             }
 
-            // 우측하단 yellow-fill-stroke 삼각형
+            // 좌측상단 black-fill-삼각형
             function triangle1() {
+                // 검정 fill 삼각형
+                ctx.fillStyle = 'rgb(43,44,49)';
+
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(270, 0);
+                ctx.lineTo(0, 270);
+                ctx.fill();
+            }
+
+            // 우측하단 yellow-fill-stroke 삼각형
+            function triangle2() {
                 // 노란 fill 삼각형
                 ctx.fillStyle = 'rgb(230,219,33)';
 
@@ -131,7 +140,7 @@
                 ctx.closePath();
                 ctx.fill();
 
-                // 6px 검정 stroke 삼각형
+                // 6px 검정 stroke
                 ctx.strokeStyle = 'rgb(43,44,49)';
                 ctx.lineWidth = 6;
 
@@ -143,7 +152,7 @@
             }
 
             // 우측하단 pattern-fill-stroke 삼각형
-            function triangle2() {
+            function triangle3() {
                 // 흰 배경 파란 땡땡이 삼각형
                 dotPattern('rgb(240,240,240)', 'rgb(32,23,132)', 1.85);
 
@@ -164,18 +173,6 @@
                 ctx.stroke();
             }
 
-            // 좌측상단 black-fill-삼각형
-            function triangle3() {
-                // 검정 fill 삼각형
-                ctx.fillStyle = 'rgb(43,44,49)';
-
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(270, 0);
-                ctx.lineTo(0, 270);
-                ctx.fill();
-            }
-
             // black 직선 2개
             function line() {
                 // 6px 검정선
@@ -193,19 +190,8 @@
                 ctx.stroke();
             }
 
-            // 좌측상단 white-fill-호
-            function arc1() {
-                // 하얀 fill 호
-                ctx.fillStyle = 'rgb(240,240,240)';
-
-                ctx.beginPath();
-                ctx.arc(0, 0, 130, 0, 0.5 * Math.PI);
-                ctx.lineTo(0, 0); // 주석처리하면 모양 변함
-                ctx.fill();
-            }
-
             // 우측상단 white-fill-stroke-호 & pattern-fill-stroke-호
-            function arc2() {
+            function arc1() {
                 // 6px 검정 stroke & 하얀 fill 호
                 ctx.fillStyle = 'rgb(240,240,240)';
 
@@ -221,7 +207,7 @@
                 ctx.arc(400, 0, 200, 0.5 * Math.PI, 1 * Math.PI);
                 ctx.stroke();
 
-                // 검정배경 흰 땡땡이 배경 호
+                // 검정 획 흰 땡땡이 배경 호
                 dotPattern('rgb(43,44,49)', 'rgb(240,240,240)', 1.6);
 
                 ctx.beginPath();
@@ -235,6 +221,17 @@
                 ctx.beginPath();
                 ctx.arc(400, 0, 130, 0.5 * Math.PI, 1 * Math.PI);
                 ctx.stroke();
+            }
+
+            // 좌측상단 white-fill-호
+            function arc2() {
+                // 하얀 fill 호
+                ctx.fillStyle = 'rgb(240,240,240)';
+
+                ctx.beginPath();
+                ctx.arc(0, 0, 130, 0, 0.5 * Math.PI);
+                ctx.lineTo(0, 0);
+                ctx.fill();
             }
 
             // 좌측하단 yellow-fill-stroke 호
@@ -308,12 +305,12 @@
                 ctx.stroke();
             }
 
-            triangle3();
-            line();
-            arc2();
             triangle1();
-            triangle2();
+            line();
             arc1();
+            triangle2();
+            triangle3();
+            arc2();
             arc3();
             arc4();
             arc5();
@@ -328,36 +325,30 @@
                 ctx.lineWidth = 20;
 
                 // 'Tour 작성'
-                ctx.textAlign = 'start';
-                ctx.strokeText('Tour', 441, 174);
-
-                var gradient = ctx.createLinearGradient(441, 0, 536, 0);;
+                var gradient = ctx.createLinearGradient(441, 0, 536, 0);
                 gradient.addColorStop(0, 'rgb(0, 85, 164)');
                 gradient.addColorStop(0.2, 'rgb(0, 85, 164)');
-
                 gradient.addColorStop(0.4, 'rgb(' + r + ',' + g + ',' + b + ')');
                 gradient.addColorStop(0.6, 'rgb(' + r + ',' + g + ',' + b + ')');
-
                 gradient.addColorStop(0.8, 'rgb(239, 65, 53)');
                 gradient.addColorStop(1, 'rgb(239, 65, 53)');
 
+                ctx.textAlign = 'start';
+                ctx.strokeText('Tour', 441, 174);
                 ctx.fillStyle = gradient;
                 ctx.fillText('Tour', 441, 174);
 
                 // 'Eiffel 작성'
-                ctx.textAlign = 'end';
-                ctx.strokeText('Eiffel', 759, 174);
-
-                gradient = ctx.createLinearGradient(657, 0, 756, 0);;
+                gradient = ctx.createLinearGradient(657, 0, 756, 0);
                 gradient.addColorStop(0, 'rgb(0, 85, 164)');
                 gradient.addColorStop(0.2, 'rgb(0, 85, 164)');
-
                 gradient.addColorStop(0.4, 'rgb(' + r + ',' + g + ',' + b + ')');
                 gradient.addColorStop(0.6, 'rgb(' + r + ',' + g + ',' + b + ')');
-
                 gradient.addColorStop(0.8, 'rgb(239, 65, 53)');
                 gradient.addColorStop(1, 'rgb(239, 65, 53)');
 
+                ctx.textAlign = 'end';
+                ctx.strokeText('Eiffel', 759, 174);
                 ctx.fillStyle = gradient;
                 ctx.fillText('Eiffel', 759, 174);
             }
@@ -370,55 +361,25 @@
 
             // 외부 베지어 곡선
             function bezier1() {
-                // 내부 색칠
+                // 내부 색칠 및 여백 색칠
                 ctx.fillStyle = grad;
                 ctx.beginPath();
                 ctx.moveTo(800, 800); // 시작점
                 ctx.bezierCurveTo(
-                    635, 655, // 제어점1
-                    600, 70, // 제어점2
-                    600, 70 // 끝점
+                    635, 655, 600, 70, 600, 70 // 끝점
                 );
                 ctx.bezierCurveTo(
-                    600, 70, // 제어점1
-                    565, 655, // 제어점2
-                    400, 800 // 끝점
+                    600, 70, 565, 655, 400, 800 // 끝점
                 );
                 ctx.fill();
 
-                // 외부 여벽 색칠
+                // 여백 색칠
                 ctx.strokeStyle = grad;
                 ctx.lineWidth = 40;
-
-                ctx.beginPath();
-                ctx.moveTo(800, 800); // 시작점
-                ctx.bezierCurveTo(
-                    635, 655, // 제어점1
-                    600, 70, // 제어점2
-                    600, 70 // 끝점
-                );
-                ctx.bezierCurveTo(
-                    600, 70, // 제어점1
-                    565, 655, // 제어점2
-                    400, 800 // 끝점
-                );
                 ctx.stroke();
 
                 // 실제 색칠
                 setStroke();
-
-                ctx.beginPath();
-                ctx.moveTo(800, 800); // 시작점
-                ctx.bezierCurveTo(
-                    635, 655, // 제어점1
-                    600, 70, // 제어점2
-                    600, 70 // 끝점
-                );
-                ctx.bezierCurveTo(
-                    600, 70, // 제어점1
-                    565, 655, // 제어점2
-                    400, 800 // 끝점
-                );
                 ctx.stroke();
             }
 
@@ -492,13 +453,20 @@
 
             // 선
             function line() {
-                // 1층 베지어 연결 선
-                function floor1() {
+                // 베지어 연결 선
+                function floor() {
+                    // 1층 
                     ctx.beginPath();
                     ctx.moveTo(515, 700);
                     ctx.lineTo(535, 655);
                     ctx.lineTo(665, 655);
                     ctx.lineTo(685, 700);
+                    ctx.stroke();
+
+                    // 2층
+                    ctx.beginPath();
+                    ctx.moveTo(580, 475);
+                    ctx.lineTo(620, 475);
                     ctx.stroke();
                 }
 
@@ -510,14 +478,8 @@
                     ctx.lineTo(715, 615);
                     ctx.lineTo(705, 640);
                     ctx.lineTo(495, 640);
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.moveTo(485, 615);
-                    ctx.lineTo(715, 615);
-                    ctx.lineTo(705, 640);
-                    ctx.lineTo(495, 640);
                     ctx.closePath();
+                    ctx.fill();
                     ctx.stroke();
                 }
 
@@ -529,14 +491,8 @@
                     ctx.lineTo(665, 425);
                     ctx.lineTo(655, 460);
                     ctx.lineTo(545, 460);
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.moveTo(535, 425);
-                    ctx.lineTo(665, 425);
-                    ctx.lineTo(655, 460);
-                    ctx.lineTo(545, 460);
                     ctx.closePath();
+                    ctx.fill();
                     ctx.stroke();
                 }
 
@@ -546,30 +502,15 @@
                     ctx.beginPath();
                     ctx.moveTo(583, 170);
                     ctx.lineTo(617, 170);
-                    ctx.lineTo(615, 147)
-                    ctx.lineTo(585, 147)
-                    ctx.fill();
-
-                    ctx.beginPath();
-                    ctx.moveTo(583, 170);
-                    ctx.lineTo(617, 170);
-                    ctx.lineTo(615, 147)
-                    ctx.lineTo(585, 147)
+                    ctx.lineTo(615, 147);
+                    ctx.lineTo(585, 147);
                     ctx.closePath();
+                    ctx.fill();
                     ctx.stroke();
                 }
 
-                // 2층 베지어 연결 선
-                function floor2() {
-                    ctx.beginPath();
-                    ctx.moveTo(580, 475);
-                    ctx.lineTo(620, 475);
-                    ctx.stroke();
-                }
-
-                floor1();
+                floor();
                 stage1();
-                floor2();
                 stage2();
                 stage3();
             }
@@ -584,9 +525,6 @@
 
         // 3번째 작품
         function draw3() {
-            ctx.fillStyle = 'rgb(250,250,250)';
-            ctx.fillRect(800, 0, 400, 400);
-
             // stroke 스타일(색상, 두께) 지정
             ctx.strokeStyle = 'rgb(43,44,49)';
             ctx.lineWidth = 5;
@@ -599,20 +537,67 @@
             // 배열에 5개가 저장되면, 모두 Load 된 상태
             var loadStatus = [];
             // Image 객체 배열
-            var img = [0,0,0,0,0];
+            var img = [0, 0, 0, 0, 0];
 
+            // 이미지 로드 및 저장 작업
             function hair() {
                 img[0] = new Image();
-
                 img[0].src = 'resource/0hair.png';
                 img[0].onload = function () {
                     loadStatus.push(true);
                     tryDraw();
                 };
-
-
             }
 
+            function skirt() {
+                img[1] = new Image();
+                img[1].src = 'resource/1skirt.png';
+                img[1].onload = function () {
+                    loadStatus.push(true);
+                    tryDraw();
+                };
+            }
+
+            function face() {
+                img[2] = new Image();
+                img[2].src = 'resource/2face.png';
+                img[2].onload = function () {
+                    loadStatus.push(true);
+                    tryDraw();
+                };
+            }
+
+            function arm() {
+                img[3] = new Image();
+                img[3].src = 'resource/3arm.png';
+                img[3].onload = function () {
+                    loadStatus.push(true);
+                    tryDraw();
+                };
+            }
+            
+            function mouth() {
+                img[4] = new Image();
+                img[4].src = 'resource/4mouth.png';
+                img[4].onload = function () {
+                    loadStatus.push(true);
+                    tryDraw();
+                };
+            }
+
+            // 로드가 완료되면 본격적인 그리기 작업
+            function tryDraw() {
+                console.log(loadStatus.length / 5 * 100 + '%');
+                if (loadStatus.length === 5) {
+                    drawHair();
+                    drawSkirt();
+                    drawFace();
+                    drawArm();
+                    drawMouth();
+                }
+            }
+
+            // 신체 부위별 그리기 함수
             function drawHair() {
                 pos = {
                     x: 986,
@@ -623,16 +608,6 @@
                 ctx.drawImage(img[0], pos.x, pos.y);
                 ctx.shadowColor = 'transparent';
                 ctx.strokeRect(pos.x, pos.y, img[0].width, img[0].height);
-            }
-
-            function skirt() {
-                img[1] = new Image();
-
-                img[1].src = 'resource/1skirt.png';
-                img[1].onload = function () {
-                    loadStatus.push(true);
-                    tryDraw();
-                };
             }
 
             function drawSkirt() {
@@ -647,17 +622,6 @@
                 ctx.strokeRect(pos.x, pos.y, img[1].width, img[1].height);
             }
 
-            function face() {
-                img[2] = new Image();
-
-                img[2].src = 'resource/2face.png';
-                img[2].onload = function () {
-
-                    loadStatus.push(true);
-                    tryDraw();
-                };
-            }
-
             function drawFace() {
                 pos = {
                     x: 862,
@@ -668,17 +632,6 @@
                 ctx.drawImage(img[2], pos.x, pos.y);
                 ctx.shadowColor = 'transparent';
                 ctx.strokeRect(pos.x, pos.y, img[2].width, img[2].height);
-            }
-
-            function arm() {
-                img[3] = new Image();
-
-                img[3].src = 'resource/3arm.png';
-                img[3].onload = function () {
-
-                    loadStatus.push(true);
-                    tryDraw();
-                };
             }
 
             function drawArm() {
@@ -693,17 +646,6 @@
                 ctx.strokeRect(pos.x, pos.y, img[3].width, img[3].height);
             }
 
-            function mouth() {
-                img[4] = new Image();
-
-                img[4].src = 'resource/4mouth.png';
-                img[4].onload = function () {
-
-                    loadStatus.push(true);
-                    tryDraw();
-                };
-            }
-
             function drawMouth() {
                 pos = {
                     x: 819,
@@ -714,19 +656,6 @@
                 ctx.drawImage(img[4], pos.x, pos.y);
                 ctx.shadowColor = 'transparent';
                 ctx.strokeRect(pos.x, pos.y, img[4].width, img[4].height);
-            }
-
-            function tryDraw() {
-                console.log(loadStatus.length/5*100 + '%');
-
-                if (loadStatus.length === 5) {
-                    console.log(img)
-                    drawHair();
-                    drawSkirt();
-                    drawFace();
-                    drawArm();
-                    drawMouth();
-                }
             }
 
             hair();
@@ -741,46 +670,32 @@
         draw2(0, 0, 0);
         draw3();
 
-        // 색이 변하는 에펠탑
-        var i = 0, flag = true;
-        var signal = true;
+        // 애니메이션 및 Toggle 영역
+        var i = 0, flag = true, toggle = true, handle;
 
-        var glowEiffel = setInterval(function () {
+        // 에펠탑 애니메이션
+        var glowEiffel = function () {
             if (flag) {
                 draw2(i++, i++, i++);
-                if (i === 255)
-                    flag = !flag;
+                if (i === 255) flag = !flag;
             }
             else {
                 draw2(i--, i--, i--);
-                if (i === 0)
-                    flag = !flag;
+                if (i === 0) flag = !flag;
             }
-        }, 10);
+        }
+        handle = setInterval(glowEiffel, 10);
 
+        // 클릭을 통한 Toggle 이벤트
         cvs.addEventListener('click', function () {
-            console.log('clicked');
-            if (signal) {
-                clearInterval(glowEiffel);
-                signal = false;
+            if (toggle) {
+                clearInterval(handle);
+                toggle = !toggle;
             }
-
             else {
-                glowEiffel = setInterval(function () {
-                    if (flag) {
-                        draw2(i++, i++, i++);
-                        if (i === 255)
-                            flag = !flag;
-                    }
-                    else {
-                        draw2(i--, i--, i--);
-                        if (i === 0)
-                            flag = !flag;
-                    }
-                }, 10);
-                signal = true;
+                handle = setInterval(glowEiffel, 10);
+                toggle = !toggle;
             }
-
         });
     </script>
 </body>
